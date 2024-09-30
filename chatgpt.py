@@ -18,6 +18,5 @@ def send_to_chatGpt(messages, model="gpt-4"):
         temperature=0.5,
     )
     message = response.choices[0].message.content
-    print(message)
     messages.append(response.choices[0].message)
     return message
