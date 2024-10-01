@@ -26,3 +26,23 @@ Go to Setting in Discord Website -> Click OAuth2 -> Check 'bot' in OAuth2 URL Ge
     ex. DISCORD_TOKEN = "123abc"
     ```
 6. Run bot.py
+
+### Special Commands
+```
+!quiz
+```
+- Starts a Q&A quiz where users select from multiple-choice answers.
+
+
+### ToDos
+
+- Tasks
+  - [x] Q&A (Multi-Choice) Function & APIs
+  - [ ] Q&A (Multi-Choice) Data
+  - [ ] Checking Skills Function & APIs
+  - [ ] Checking Skills Data
+  - [ ] Gaming Function & APIs
+  - [ ] Gaming Data
+  
+- Issues
+  - [ ] Multi-Round Conversation with ChatGPT
