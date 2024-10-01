@@ -1,7 +1,7 @@
 
 
 # Multi-Choice Questions
-mutli_choice_qas = [
+multi_choice_qas = [
     {
         "question": "What is the primary function of an operating system?",
         "choices": ["A) Perform complex calculations", "B) Manage hardware and software resources", "C) Write and edit code", "D) Connect to the internet"],

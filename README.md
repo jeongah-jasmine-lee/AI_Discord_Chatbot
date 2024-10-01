@@ -33,6 +33,11 @@ Go to Setting in Discord Website -> Click OAuth2 -> Check 'bot' in OAuth2 URL Ge
 ```
 - Starts a Q&A quiz where users select from multiple-choice answers.
 
+```
+!startgame
+```
+- Starts a multiple-choice trivia game where users compete to answer questions correctly and earn points.
+
 
 ### ToDos
 
@@ -41,7 +46,7 @@ Go to Setting in Discord Website -> Click OAuth2 -> Check 'bot' in OAuth2 URL Ge
   - [ ] Q&A (Multi-Choice) Data
   - [ ] Checking Skills Function & APIs
   - [ ] Checking Skills Data
-  - [ ] Gaming Function & APIs
+  - [x] Gaming Function & APIs (Multi-Choice QA)
   - [ ] Gaming Data
   
 - Issues
