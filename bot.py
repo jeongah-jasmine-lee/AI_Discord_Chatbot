@@ -69,9 +69,15 @@ async def quiz_command(ctx):
         else:
             # Check if the answer is correct
             if reactions[reaction.emoji] == multi_choice_qa["correct"]:
-                await ctx.send("Correct!")
+                # await ctx.send("Correct!")
+                await ctx.send(f"Correct!\n"
+                               f'Explanation: {multi_choice_qa["explanation"]}\n'
+                               f'Topic: **{multi_choice_qa["topic"]}**')
             else:
-                await ctx.send(f'Wrong! The correct answer was **{multi_choice_qa["correct"]}**')
+                # await ctx.send(f'Wrong! The correct answer was **{multi_choice_qa["correct"]}**')
+                await ctx.send(f'Wrong! The correct answer was **{multi_choice_qa["correct"]}**.\n'
+                               f'Explanation: {multi_choice_qa["explanation"]}\n'
+                               f'Topic: **{multi_choice_qa["topic"]}**')
 
         if idx == len(multi_choice_qas) - 1:
             finish_message = await ctx.send("Congrats! You have finished all questions.")
