@@ -118,25 +118,32 @@ async def start_game(ctx):
         qa_text = f"**{multi_choice_qa['question']}**\n" + "\n".join(multi_choice_qa['choices'])
         await ctx.send(f"Round {round+1} / {rounds}: {qa_text}")
 
-        # Check for the user's response
-        def check(msg):
-            return msg.channel == ctx.channel and msg.author != client.user  # Exclude bot's own messages
+        answered_correctly = False
 
-        try:
-            msg = await client.wait_for('message', check=check, timeout=30.0)
-        except asyncio.TimeoutError:
-            await ctx.send(f'Time\'s up! The correct answer was **{multi_choice_qa["correct"]}**.')
-        else:
-            # Check if the selected answer is correct
-            # TODO: check rules
-            if multi_choice_qa["correct"].lower() in msg.content.lower()[:2]:
-                winner = msg.author
-                if winner not in scoreboard:
-                    scoreboard[winner] = 0
-                scoreboard[winner] += 1
-                await ctx.send(f'Correct! {winner.mention} scores a point!')
+        # Loop until a correct answer is given
+        while not answered_correctly:
+            
+            # Check for the user's response
+            def check(msg):
+                return msg.channel == ctx.channel and msg.author != client.user  # Exclude bot's own messages
+
+            try:
+                msg = await client.wait_for('message', check=check, timeout=30.0)
+            except asyncio.TimeoutError:
+                await ctx.send(f'Time\'s up! The correct answer was **{multi_choice_qa["correct"]}**.')
+                break  # End the round if no one answers within the time limit
             else:
-                await ctx.send(f'Wrong! The correct answer was **{multi_choice_qa["correct"]}**.')
+                # Check if the selected answer is correct
+                # TODO: check rules
+                if multi_choice_qa["correct"].lower() in msg.content.lower()[:2]:
+                    winner = msg.author
+                    if winner not in scoreboard:
+                        scoreboard[winner] = 0
+                    scoreboard[winner] += 1
+                    await ctx.send(f'Correct! {winner.mention} scores a point!')
+                    answered_correctly = True  # Move to the next question
+                else:
+                    await ctx.send(f'Wrong! Try again.')
 
     game_active = False
     await display_scoreboard(ctx)
