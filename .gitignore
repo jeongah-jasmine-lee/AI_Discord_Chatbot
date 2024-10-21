@@ -1,3 +1,7 @@
 .env
 .venv
-__pycache__
+
+CS377_F22_slides
+
+__pycache__/
+*.py[cod]
