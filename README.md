@@ -38,13 +38,17 @@ Go to Setting in Discord Website -> Click OAuth2 -> Check 'bot' in OAuth2 URL Ge
 ```
 - Starts a multiple-choice trivia game where users compete to answer questions correctly and earn points.
 
+```
+!skillcheck
+```
+- Starts assessments with interactive quizzes
 
 ### ToDos
 
 - Tasks
   - [x] Q&A (Multi-Choice) Function & APIs
   - [ ] Q&A (Multi-Choice) Data
-  - [ ] Checking Skills Function & APIs
+  - [x] Checking Skills Function & APIs
   - [ ] Checking Skills Data
   - [x] Gaming Function & APIs (Multi-Choice QA)
   - [ ] Gaming Data
