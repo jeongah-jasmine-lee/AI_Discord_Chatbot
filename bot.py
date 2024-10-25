@@ -216,8 +216,8 @@ async def skillcheck_command(ctx):
             else:
                 topic_questions = [q for q in multi_choice_qas if q["topic"] == chosen_topic]
 
-                if len(topic_questions) < 10:
-                    await ctx.send(f"⚠️ The selected topic **'{topics[chosen_topic]}'** does not have enough questions. It only has **{len(topic_questions)}** questions, and at least 10 are required for the skill check.")
+                if len(topic_questions) < 5:
+                    await ctx.send(f"⚠️ The selected topic **'{topics[chosen_topic]}'** does not have enough questions. It only has **{len(topic_questions)}** questions, and at least 5 are required for the skill check.")
                     await ctx.send("🚫 **This topic is not available for the skill check at the moment.** Please select another topic from the list or choose a valid number.")
                     chosen_topic = None  
                 else:
@@ -227,10 +227,10 @@ async def skillcheck_command(ctx):
             game_active = False
             return
 
-    await ctx.send("How many questions would you like for the quiz? Type `10` or `20`.")
+    await ctx.send("How many questions would you like for the quiz? Type `5`, `10` or `20`.")
     
     def check_question_count(m):
-        return m.author == ctx.author and m.content in ["10", "20"]
+        return m.author == ctx.author and m.content in ["5", "10", "20"]
 
     try:
         count_msg = await client.wait_for('message', timeout=30.0, check=check_question_count)
@@ -300,7 +300,7 @@ async def skillcheck_command(ctx):
     # Send the result summary in chunks if it exceeds the Discord message limit
     await send_long_message(ctx, result_summary)
 
-    await ctx.send(" !!! PLEASE WAIT A FEW SECONDS FOR DETAILED ANALYSIS !!! \n")
+    await ctx.send("\n ⚠️ !!! PLEASE WAIT A FEW SECONDS FOR A PERFORMANCE FEEDBACK !!! ⚠️ \n")
 
     # Collect details for ChatGPT analysis
     wrong_answers = [r for r, a in zip(correct_responses, user_answers) if a != r['correct']]
@@ -311,6 +311,7 @@ async def skillcheck_command(ctx):
         {
             "role": "user", 
             "content": (
+                "\nCan you give me some feedback on my performance?"
                 f"I answered {correct_answers}/{total_questions} questions correctly. "
                 f"I had {len(wrong_answers)} wrong answers and {timeouts} timeouts. "
                 "Here are the details of my wrong answers:\n" +
