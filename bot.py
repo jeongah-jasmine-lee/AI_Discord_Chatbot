@@ -196,7 +196,7 @@ async def skillcheck_command(ctx):
     await ctx.send(f"📚 Please choose a topic by typing the topic number (e.g., `1`):\n{topics_list}")
 
     def check_topic(m):
-        return m.author == ctx.author and m.content.isdigit()
+        return m.author == ctx.author
 
     chosen_topic = None
     while chosen_topic is None:
@@ -227,21 +227,34 @@ async def skillcheck_command(ctx):
             game_active = False
             return
 
-    await ctx.send("How many questions would you like for the quiz? Type `5`, `10` or `20`.")
+    await ctx.send("How many questions would you like for the quiz? There are 3 options: 5, 10, or 20 questions. \nType `5`, `10` or `20`.")
     
     def check_question_count(m):
-        return m.author == ctx.author and m.content in ["5", "10", "20"]
+        return m.author == ctx.author
 
-    try:
-        count_msg = await client.wait_for('message', timeout=30.0, check=check_question_count)
-        question_count = int(count_msg.content)
-    except asyncio.TimeoutError:
-        await ctx.send("⏰ You took too long to choose the number of questions. Please try again.")
-        game_active = False
-        return
+    question_num = None
+    while question_num is None:
+        try:
+            count_msg = await client.wait_for('message', timeout=30.0, check=check_question_count)
+            question_count = count_msg.content
 
-    if len(topic_questions) > question_count:
-        topic_questions = random.sample(topic_questions, question_count)
+            if not question_count.isdigit():
+                await ctx.send(f"❌ **Invalid input**: `{question_count}` is not a valid number.")
+                continue
+
+            if question_count not in ["5", "10", "20"]:
+                await ctx.send(f"❌ **Invalid input**: `{question_count}`. Please select a valid number of questions from the list.")
+                continue
+
+            question_num = int(question_count)
+
+        except asyncio.TimeoutError:
+            await ctx.send("⏰ You took too long to choose number of questions. Please try again.")
+            game_active = False
+            return
+    
+    if len(topic_questions) > question_num:
+        topic_questions = random.sample(topic_questions, question_num)
     else:
         await ctx.send(f"There are only **{len(topic_questions)}** questions available for this topic.")
 
